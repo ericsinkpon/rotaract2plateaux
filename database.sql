@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS actions (
     titre VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
     image VARCHAR(500),
-    date_activite DATE NOT NULL,
+    date_activite DATE NOT NULL,    
     montant_collecte DECIMAL(15, 2) DEFAULT 0,
     montant_objectif DECIMAL(15, 2) DEFAULT 0,
     categorie VARCHAR(100),
