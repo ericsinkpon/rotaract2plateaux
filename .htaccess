@@ -1,0 +1,9 @@
+# Protection du dossier config
+<FilesMatch "^(database\.php)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Protection du dossier api (optionnel, les API vérifient déjà l'authentification)
+# Les fichiers API sont accessibles mais protégés par session PHP
+

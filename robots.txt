@@ -1,0 +1,17 @@
+# Rotaract Club Abidjan Deux Plateaux - robots.txt
+User-agent: *
+Allow: /
+
+# Pages principales (index, club, actualités, actions, membre, contact)
+Allow: /index.html
+Allow: /club.html
+Allow: /actualites.html
+Allow: /actions.html
+Allow: /membre.html
+Allow: /contact.html
+
+# Bloquer l'admin des moteurs de recherche
+Disallow: /admin.html
+
+# Sitemap (remplacer par votre URL réelle en production)
+Sitemap: https://www.rotaract-2plateaux.org/sitemap.xml

@@ -1,0 +1,9 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Icone Rotaract paix et prévention des conflits">
+  <circle cx="60" cy="60" r="56" fill="#D41367"/>
+  <circle cx="60" cy="60" r="34" stroke="#FFFFFF" stroke-width="6" fill="none"/>
+  <path d="M60 26V86" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+  <path d="M60 60L86 86" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+  <path d="M60 60L34 86" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+</svg>
+
+

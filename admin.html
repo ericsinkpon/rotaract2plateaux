@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Administration - Rotaract Club Abidjan Deux Plateaux</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/templatemo-kind-heart-charity.css" rel="stylesheet">
+    <style>
+        .admin-container {
+            min-height: 100vh;
+            background: #f5f5f5;
+        }
+        .admin-header {
+            background: #D41367;
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .admin-content {
+            padding: 30px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .stat-card h2 {
+            font-size: 2.5rem;
+            margin: 10px 0;
+        }
+        .nav-tabs .nav-link {
+            color: #D41367;
+            border: none;
+            border-bottom: 3px solid transparent;
+        }
+        .nav-tabs .nav-link.active {
+            color: #D41367;
+            background: transparent;
+            border-bottom: 3px solid #D41367;
+            font-weight: bold;
+        }
+        .tab-content {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .item-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .item-image-preview {
+            max-width: 200px;
+            max-height: 150px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #D41367 0%, #E0408F 100%);
+        }
+        .login-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-loading-overlay" id="pageLoadingOverlay" aria-hidden="true">
+        <img src="images/loading.JPG" alt="" class="page-loading-overlay__img" width="100" height="100">
+    </div>
+    <script>
+      (function(){var el=document.getElementById('pageLoadingOverlay');if(!el)return;
+      function hide(){el.classList.add('loaded');setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},450);}
+      if(document.readyState!=='loading')hide();else document.addEventListener('DOMContentLoaded',hide);
+      })();
+    </script>
+    <!-- Écran de connexion -->
+    <div id="loginScreen" class="login-container">
+        <div class="login-card">
+            <div class="text-center mb-4">
+                <img src="images/logo.png" class="img-fluid mb-3" alt="Logo" style="max-height: 80px;">
+                <h2 class="mb-2">Administration</h2>
+                <p class="text-muted">Rotaract Club Abidjan Deux Plateaux</p>
+            </div>
+
+            <div id="notification-container"></div>
+
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Nom d'utilisateur</label>
+                    <input type="text" class="form-control" id="username" value="admin" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Mot de passe</label>
+                    <input type="password" class="form-control" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+            </form>
+
+            <div class="text-center mt-3">
+                <small class="text-muted">Mot de passe par défaut : admin123</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interface d'administration -->
+    <div id="adminScreen" class="admin-container" style="display: none;">
+        <div class="admin-header">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h3 class="mb-0">
+                            <img src="images/logo.png" class="me-3" alt="Logo" style="max-height: 40px; vertical-align: middle;">
+                            Administration
+                        </h3>
+                    </div>
+                    <div class="col-md-4 text-end">
+                        <span class="me-3" id="adminUsername"></span>
+                        <a href="index.html" target="_blank" class="btn btn-light btn-sm me-2">
+                            <i class="bi-house me-1"></i>Voir le site
+                        </a>
+                        <button class="btn btn-light btn-sm" onclick="logout()">
+                            <i class="bi-box-arrow-right me-1"></i>Déconnexion
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-content">
+            <div class="container">
+                <!-- Statistiques -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="stat-card">
+                            <h5><i class="bi-heart text-primary me-2"></i>Actions</h5>
+                            <h2 id="stats-actions">0</h2>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="stat-card">
+                            <h5><i class="bi-newspaper text-success me-2"></i>Actualités</h5>
+                            <h2 id="stats-actualites">0</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Onglets -->
+                <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="actions-tab" data-bs-toggle="tab" data-bs-target="#actions" type="button" role="tab">
+                            <i class="bi-heart me-2"></i>Actions
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="actualites-tab" data-bs-toggle="tab" data-bs-target="#actualites" type="button" role="tab">
+                            <i class="bi-newspaper me-2"></i>Actualités
+                        </button>
+                    </li>
+                </ul>
+
+                <div class="tab-content" id="adminTabContent">
+                    <!-- Onglet Actions -->
+                    <div class="tab-pane fade show active" id="actions" role="tabpanel">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4>Gérer les actions</h4>
+                            <button class="btn btn-primary" onclick="openActionModal()">
+                                <i class="bi-plus-circle me-2"></i>Ajouter une action
+                            </button>
+                        </div>
+                        <div id="actions-list"></div>
+                    </div>
+
+                    <!-- Onglet Actualités -->
+                    <div class="tab-pane fade" id="actualites" role="tabpanel">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4>Gérer les actualités</h4>
+                            <button class="btn btn-success" onclick="openActualiteModal()">
+                                <i class="bi-plus-circle me-2"></i>Ajouter une actualité
+                            </button>
+                        </div>
+                        <div id="actualites-list"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Modal Action -->
+    <div class="modal fade" id="actionModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="actionModalTitle">Ajouter une action</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="actionForm">
+                        <input type="hidden" id="actionId">
+                        <div class="mb-3">
+                            <label for="actionTitre" class="form-label">Titre *</label>
+                            <input type="text" class="form-control" id="actionTitre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="actionDescription" class="form-label">Description *</label>
+                            <textarea class="form-control" id="actionDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="actionImageFile" class="form-label">Image *</label>
+                            <input type="file" class="form-control" id="actionImageFile" accept="image/jpeg,image/png,image/gif,image/webp">
+                            <input type="hidden" id="actionImage" value="">
+                            <small class="text-muted">JPG, PNG, GIF ou WebP — max 5 Mo</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="actionDate" class="form-label">Date de l'activité *</label>
+                            <input type="date" class="form-control" id="actionDate" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="actionMontantCollecte" class="form-label">Montant collecté (FCFA)</label>
+                                    <input type="number" class="form-control" id="actionMontantCollecte" value="0">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="actionMontantObjectif" class="form-label">Montant objectif (FCFA)</label>
+                                    <input type="number" class="form-control" id="actionMontantObjectif" value="0">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="actionCategorie" class="form-label">Catégorie</label>
+                            <select class="form-control" id="actionCategorie">
+                                <option value="">Sélectionner</option>
+                                <option value="sante">Santé</option>
+                                <option value="education">Éducation</option>
+                                <option value="environnement">Environnement</option>
+                                <option value="solidarite">Solidarité</option>
+                                <option value="eau">Eau et assainissement</option>
+                            </select>
+                        </div>
+                        <div id="actionImagePreview" class="mb-3"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary" onclick="saveAction()">Enregistrer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Actualité -->
+    <div class="modal fade" id="actualiteModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="actualiteModalTitle">Ajouter une actualité</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="actualiteForm">
+                        <input type="hidden" id="actualiteId">
+                        <div class="mb-3">
+                            <label for="actualiteTitre" class="form-label">Titre *</label>
+                            <input type="text" class="form-control" id="actualiteTitre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="actualiteDescription" class="form-label">Description *</label>
+                            <textarea class="form-control" id="actualiteDescription" rows="3" required></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="actualiteContenu" class="form-label">Contenu complet</label>
+                            <textarea class="form-control" id="actualiteContenu" rows="5"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="actualiteImageFile" class="form-label">Image *</label>
+                            <input type="file" class="form-control" id="actualiteImageFile" accept="image/jpeg,image/png,image/gif,image/webp">
+                            <input type="hidden" id="actualiteImage" value="">
+                            <small class="text-muted">JPG, PNG, GIF ou WebP — max 5 Mo</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="actualiteDate" class="form-label">Date de publication *</label>
+                            <input type="date" class="form-control" id="actualiteDate" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="actualiteCategorie" class="form-label">Catégorie</label>
+                                    <select class="form-control" id="actualiteCategorie">
+                                        <option value="">Sélectionner une catégorie</option>
+                                        <option value="Santé">Santé</option>
+                                        <option value="Action">Action</option>
+                                        <option value="Éducation">Éducation</option>
+                                        <option value="Environnement">Environnement</option>
+                                        <option value="Solidarité">Solidarité</option>
+                                        <option value="Évènement">Évènement</option>
+                                        <option value="Formation">Formation</option>
+                                        <option value="Réunion">Réunion</option>
+                                        <option value="Anniversaire">Anniversaire</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="actualiteAuteur" class="form-label">Auteur</label>
+                                    <input type="text" class="form-control" id="actualiteAuteur" value="Par le Club">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="actualiteImagePreview" class="mb-3"></div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-success" onclick="saveActualite()">Publier</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/custom.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/admin-unified.js"></script>
+</body>
+
+</html>
+

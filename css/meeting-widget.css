@@ -1,0 +1,267 @@
+/* ============================================
+   Widget flottant - Dates de réunion
+   Rotaract Club Abidjan Deux Plateaux
+   ============================================ */
+
+.floating-meeting-widget {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 9999;
+  font-family: inherit;
+  max-width: 340px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  pointer-events: auto;
+}
+
+/* Carte principale : ombre et cohérence visuelle */
+.floating-meeting-widget .floating-meeting-widget__header,
+.floating-meeting-widget .floating-meeting-widget__content {
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(212, 19, 103, 0.2), 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* En-tête masqué par défaut : une seule bulle visible (le toggle). Au clic, header + contenu s'affichent. */
+.floating-meeting-widget__header {
+  display: none !important;
+  background: linear-gradient(135deg, #D41367 0%, #E0408F 100%);
+  color: #fff;
+  padding: 16px 20px;
+  border-radius: 16px 16px 0 0;
+  align-items: center;
+  gap: 12px;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.floating-meeting-widget.expanded .floating-meeting-widget__header {
+  display: flex !important;
+}
+
+.floating-meeting-widget__header i {
+  font-size: 1.35rem;
+  opacity: 0.95;
+}
+
+.floating-meeting-widget__close {
+  margin-left: auto;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.floating-meeting-widget__close:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: rotate(90deg);
+}
+
+.floating-meeting-widget__content {
+  background: #fff;
+  border-radius: 0 0 16px 16px;
+  padding: 24px 20px;
+  display: none !important;
+  border: 1px solid rgba(212, 19, 103, 0.08);
+  border-top: none;
+  animation: meetingSlideUp 0.35s ease-out;
+}
+
+.floating-meeting-widget.expanded .floating-meeting-widget__content {
+  display: block !important;
+}
+
+@keyframes meetingSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.floating-meeting-widget__icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, #D41367 0%, #E0408F 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.6rem;
+  box-shadow: 0 6px 16px rgba(212, 19, 103, 0.25);
+}
+
+.floating-meeting-widget__content h4 {
+  text-align: center;
+  color: #1a1a1a;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 14px;
+  letter-spacing: 0.01em;
+}
+
+.floating-meeting-widget__schedule {
+  text-align: center;
+  background: #f4f7fa;
+  padding: 14px 16px;
+  border-radius: 12px;
+  margin: 0 0 16px;
+  color: #444;
+  line-height: 1.6;
+  font-size: 0.95rem;
+  border: 1px solid rgba(212, 19, 103, 0.1);
+}
+
+.floating-meeting-widget__schedule i {
+  color: #D41367;
+  font-size: 1.25rem;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.floating-meeting-widget__schedule strong {
+  color: #D41367;
+  font-size: 1.1rem;
+  display: block;
+  margin: 4px 0;
+}
+
+.floating-meeting-widget__schedule sup {
+  font-size: 0.7em;
+  vertical-align: super;
+}
+
+.floating-meeting-widget__next {
+  background: #fff;
+  border: 2px dashed rgba(212, 19, 103, 0.35);
+  border-radius: 10px;
+  padding: 12px 14px;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.floating-meeting-widget__next small {
+  display: block;
+  color: #666;
+  font-size: 0.75rem;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.floating-meeting-widget__next span {
+  display: block;
+  color: #D41367;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.floating-meeting-widget__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  background: linear-gradient(135deg, #D41367 0%, #E0408F 100%);
+  color: #fff !important;
+  padding: 12px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 14px rgba(212, 19, 103, 0.3);
+  border: none;
+}
+
+.floating-meeting-widget__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(212, 19, 103, 0.4);
+  color: #fff !important;
+}
+
+.floating-meeting-widget__btn i {
+  font-size: 1.1rem;
+}
+
+/* Bouton flottant (toggle) quand le widget est fermé */
+.floating-meeting-widget__toggle {
+  background: linear-gradient(135deg, #D41367 0%, #E0408F 100%);
+  color: #fff;
+  padding: 14px 22px;
+  border-radius: 50px;
+  box-shadow: 0 8px 24px rgba(212, 19, 103, 0.35);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.floating-meeting-widget__toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(212, 19, 103, 0.45);
+}
+
+.floating-meeting-widget__toggle i {
+  font-size: 1.2rem;
+}
+
+.floating-meeting-widget.expanded .floating-meeting-widget__toggle {
+  display: none !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .floating-meeting-widget {
+    bottom: 20px;
+    right: 20px;
+    left: 20px;
+    max-width: none;
+  }
+
+  .floating-meeting-widget__header,
+  .floating-meeting-widget__content {
+    border-radius: 14px;
+  }
+
+  .floating-meeting-widget__content {
+    padding: 20px 18px;
+  }
+
+  .floating-meeting-widget__toggle {
+    padding: 12px 18px;
+    font-size: 0.9rem;
+  }
+
+  .floating-meeting-widget__icon {
+    width: 48px;
+    height: 48px;
+    font-size: 1.4rem;
+  }
+
+  .floating-meeting-widget__content h4 {
+    font-size: 1.15rem;
+  }
+}
